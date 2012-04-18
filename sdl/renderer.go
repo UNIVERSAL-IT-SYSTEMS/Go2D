@@ -1,6 +1,6 @@
 package sdl
 
-//#include "SDL.h"
+// #include <SDL/SDL.h>
 import "C"
 import "unsafe"
 
