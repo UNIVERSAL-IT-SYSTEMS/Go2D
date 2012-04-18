@@ -1,7 +1,7 @@
  package main
 
 import (
-	"go2d"
+	"github.com/genbattle/Go2D/go2d"
 	"fmt"
 )
 
