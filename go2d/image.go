@@ -1,7 +1,7 @@
 package go2d
 
 import (
-	"sdl"
+	"github.com/genbattle/Go2D/sdl"
 )
 
 type Image struct {
