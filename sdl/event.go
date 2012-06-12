@@ -1,6 +1,6 @@
 package sdl
 
-// #include <SDL/SDL.h>
+// #include <SDL2/SDL.h>
 import "C"
 
 type SDLEvent struct {
@@ -66,7 +66,7 @@ type KeyboardEvent struct {
 	Repeat   uint8
 	Padding2 uint8
 	Padding3 uint8
-	keysym   C.SDL_keysym
+	keysym   C.SDL_Keysym
 }
 
 func (e *KeyboardEvent) Keysym() *KeySym {

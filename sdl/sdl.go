@@ -1,7 +1,8 @@
 package sdl
 
-// #cgo LDFLAGS: -lSDL_ttf -lSDL -lSDL_image
-// #include <SDL/SDL.h>
+// #cgo LDFLAGS: -lSDL2 -lpthread -lSDL_ttf -lSDL_image
+// #cgo CFLAGS: -D_REENTRANT
+// #include <SDL2/SDL.h>
 import "C"
 import "unsafe"
 
