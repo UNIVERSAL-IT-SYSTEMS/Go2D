@@ -25,10 +25,12 @@ func (s *Surface) CreateTexture(_renderer *Renderer) *Texture {
 	return (*Texture)(cast(tex))
 }
 
+// TODO(Nick): Figure out how this is now done in SDL2, since this method has been removed
+/* // DEPRECATED
 func (s *Surface) DisplayFormatAlpha() *Surface {
 	return (*Surface)(C.SDL_DisplayFormatAlpha(s.Get()))
 }
-
+*/
 func (s *Surface) SaveBMP(_file string) {
 	cfile := C.CString(_file)
 	defer C.free(unsafe.Pointer(cfile))
