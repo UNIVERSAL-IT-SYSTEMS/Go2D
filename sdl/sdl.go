@@ -5,6 +5,7 @@ package sdl
 // #include <SDL2/SDL.h>
 import "C"
 import "unsafe"
+import "errors"
 
 type cast unsafe.Pointer
 
@@ -36,13 +37,11 @@ func KeyDown(_key int) bool {
 	return false
 }
 
-func Init() (error string) {
-	flags := int64(C.SDL_INIT_VIDEO)
+func Init(flags uint32) (err error) {
 	if C.SDL_Init(C.Uint32(flags)) != 0 {
-		error = C.GoString(C.SDL_GetError())
-		return
+		return errors.New(C.GoString(C.SDL_GetError()))
 	}
-	return ""
+	return nil
 }
 
 type Window struct {
