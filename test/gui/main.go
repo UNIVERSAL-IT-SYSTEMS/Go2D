@@ -69,9 +69,15 @@ func start() {
 	
 	//A customized button
 	customButton := go2d.NewButton(20, 240, 186, 52, "")
-	customButton.SetImage(go2d.NewImage("button_normal.png"))
-	customButton.SetHoverImage(go2d.NewImage("button_hover.png"))
-	customButton.SetMouseDownImage(go2d.NewImage("button_down.png"))
+	loadedImage, err := go2d.NewImage("button_normal.png")
+	checkError(err)
+	customButton.SetImage(loadedImage)
+	loadedImage, err = go2d.NewImage("button_hover.png")
+	checkError(err)
+	customButton.SetHoverImage(loadedImage)
+	loadedImage, err = go2d.NewImage("button_down.png")
+	checkError(err)
+	customButton.SetMouseDownImage(loadedImage)
 	customButton.SetOnClickListener(CustomButtonOnClick)
 	g_window.AddChild(customButton)
 	
@@ -94,6 +100,13 @@ func update(dt uint32) {
 func draw() {
 
 } 
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+		g_game.Exit()
+	}
+}
 
 func main() {
 	g_game = go2d.NewGame("Test Game")

@@ -8,6 +8,7 @@ import "C"
 import (
 	"fmt"
 	"unsafe"
+	"errors"
 )
 
 type Surface C.SDL_Surface
@@ -47,14 +48,14 @@ func LoadBMP(_file string) *Surface {
 	return (*Surface)(C.SDL_LoadBMP_RW(C.SDL_RWFromFile(cfile, cparams), C.int(1)))
 }
 
-func LoadImage(_file string) *Surface {
+func LoadImage(_file string) (*Surface, error) {
 	cfile := C.CString(_file)
 	defer C.free(unsafe.Pointer(cfile))
 	img := C.IMG_Load(cfile)
 	if img == nil {
-		fmt.Printf("Image load error: %v", C.GoString(C.IMG_GetError()))
+		return nil, errors.New("Image load error: " + C.GoString(C.IMG_GetError()))
 	}
-	return (*Surface)(cast(img))
+	return (*Surface)(cast(img)), nil
 }
 
 func LoadImageRW(_data *[]byte, _size int) *Surface {

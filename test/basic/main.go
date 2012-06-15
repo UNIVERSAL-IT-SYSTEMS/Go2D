@@ -7,9 +7,12 @@ import (
 
 var image *go2d.Image
 var arial16 *go2d.Font
+var game *go2d.Game
 
 func start() {
-	image = go2d.NewImage("test.png")
+	var err error
+	image, err = go2d.NewImage("test.png")
+	checkError(err)
 	
 	arial16 = go2d.NewFont("arial.ttf", 16)
 	arial16.SetStyle(true, false, false)
@@ -47,8 +50,15 @@ func keyDown(key int) {
 	}
 }
 
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+		game.Exit()
+	}
+}
+
 func main() {
-	game := go2d.NewGame("Test Game")
+	game = go2d.NewGame("Test Game")
 	game.SetDimensions(800, 600)
 	game.SetD3D(true)
 	

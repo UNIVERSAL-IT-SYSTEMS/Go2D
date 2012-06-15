@@ -128,7 +128,7 @@ func (game *Game) initialize() {
 
 	game.renderer, errString = sdl.CreateRenderer(game.window, rendererIndex)
 	if errString != "" {
-		panic(fmt.Sprintf("Go2D Error: Creating renderer: %s", err))
+		panic(fmt.Sprintf("Go2D Error: Creating renderer: %s", errString))
 	}
 
 	//initialize font rendering

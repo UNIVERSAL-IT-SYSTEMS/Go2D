@@ -13,14 +13,16 @@ type Image struct {
 }
 
 //Load image from file
-func NewImage(_file string) *Image {
+func NewImage(_file string) (*Image, error) {
 	image := &Image{blendmode: sdl.BLENDMODE_BLEND}
+	var err error
+	image.surface, err = sdl.LoadImage(GetPath() + _file)
+	if err != nil {
+		return nil, err
+	}
 	addResource(image)
-
-	image.surface = sdl.LoadImage(GetPath() + _file)
-
 	image.reload()
-	return image
+	return image, nil
 }
 
 //Internal: load image from sdl surface
