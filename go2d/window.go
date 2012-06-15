@@ -35,7 +35,7 @@ func (w *Window) KeyDown(button int) {
 func (w *Window) NextFocus() {
 	var elements []IElement = make([]IElement, 0)
 	w.FillFocusList(&elements)
-	
+
 	if len(elements) > 0 {
 		if len(elements) > 1 {
 			currentFocusIndex := 0
@@ -47,10 +47,10 @@ func (w *Window) NextFocus() {
 			}
 
 			currentFocusIndex++
-			if currentFocusIndex > (len(elements)-1) {
+			if currentFocusIndex > (len(elements) - 1) {
 				currentFocusIndex = 0
 			}
-			
+
 			elements[currentFocusIndex].SetFocus(true)
 		} else {
 			elements[0].SetFocus(true)
@@ -61,10 +61,10 @@ func (w *Window) NextFocus() {
 func (w *Window) FocusElement(element IElement) {
 	var elements []IElement = make([]IElement, 0)
 	w.FillFocusList(&elements)
-	
+
 	for _, elem := range elements {
 		elem.SetFocus(false)
 	}
-	
+
 	element.SetFocus(true)
 }

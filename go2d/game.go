@@ -16,13 +16,13 @@ type Game struct {
 	updateFun func(dt uint32)
 	drawFun   func()
 
-	mouseupFun   	func(int16, int16)
-	mousedownFun 	func(int16, int16)
-	mousemoveFun 	func(int16, int16)
-	mousescrollFun  func(int)
-	keydownFun   	func(int)
-	keyupFun   		func(int)
-	textinputFun	func(uint8)
+	mouseupFun     func(int16, int16)
+	mousedownFun   func(int16, int16)
+	mousemoveFun   func(int16, int16)
+	mousescrollFun func(int)
+	keydownFun     func(int)
+	keyupFun       func(int)
+	textinputFun   func(uint8)
 
 	title         string
 	width, height int
@@ -30,7 +30,7 @@ type Game struct {
 
 	window   *sdl.Window
 	renderer *sdl.Renderer
-	
+
 	guiManager *GUIManager
 }
 
@@ -91,11 +91,16 @@ func (game *Game) SetTextInputFun(_textinput func(uint8)) {
 
 //Internal initalization (executes when game starts)
 func (game *Game) initialize() {
+	// Initialize SDL
+	err := sdl.Init(sdl.INIT_VIDEO)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	//Create the window
-	var err string
-	game.window, err = sdl.CreateWindow(game.title, game.width, game.height)
-	if err != "" {
-		panic(fmt.Sprintf("Go2D Error: Creating window: %s", err))
+	var errString string
+	game.window, errString = sdl.CreateWindow(game.title, game.width, game.height)
+	if errString != "" {
+		panic(fmt.Sprintf("Go2D Error: Creating window: %s", errString))
 	}
 
 	//Create the renderer
@@ -121,8 +126,8 @@ func (game *Game) initialize() {
 		rendererIndex = d3dIndex
 	}
 
-	game.renderer, err = sdl.CreateRenderer(game.window, rendererIndex)
-	if err != "" {
+	game.renderer, errString = sdl.CreateRenderer(game.window, rendererIndex)
+	if errString != "" {
 		panic(fmt.Sprintf("Go2D Error: Creating renderer: %s", err))
 	}
 
@@ -154,7 +159,7 @@ func (game *Game) draw() {
 	if game.drawFun != nil {
 		game.drawFun()
 	}
-	
+
 	if game.guiManager != nil {
 		game.guiManager.Draw()
 	}

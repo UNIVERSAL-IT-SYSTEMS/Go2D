@@ -18,6 +18,6 @@ func (p *Panel) Draw(drawArea *Rect) {
 
 		DrawFillRect(inRect, p.backgroundColor.R, p.backgroundColor.G, p.backgroundColor.B, 255)
 	}
-	
+
 	p.Container.Draw(drawArea)
 }

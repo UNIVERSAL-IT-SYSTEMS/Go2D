@@ -20,10 +20,10 @@ type IElement interface {
 }
 
 type Element struct {
-	rect *Rect
-	visible bool
-	parent IElement
-	focus bool
+	rect      *Rect
+	visible   bool
+	parent    IElement
+	focus     bool
 	focusable bool
 }
 
@@ -90,6 +90,6 @@ func (e *Element) Window() *Window {
 			return window
 		}
 		return e.Parent().Window()
-	} 
+	}
 	return nil
 }

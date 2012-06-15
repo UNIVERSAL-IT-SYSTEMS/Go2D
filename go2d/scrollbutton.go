@@ -2,13 +2,13 @@ package go2d
 
 type ScrollButton struct {
 	Button
-	
+
 	OnScrollChangeListener
-	
-	boundaries *Rect
-	startX, startY int
+
+	boundaries             *Rect
+	startX, startY         int
 	mouseDownX, mouseDownY int
-	scrolling bool
+	scrolling              bool
 }
 
 func NewScrollButton(x, y, width, height int, boundaries *Rect) *ScrollButton {
@@ -29,10 +29,10 @@ func (s *ScrollButton) SetBoundaries(boundaries *Rect) {
 func (s *ScrollButton) MouseDown(x, y int) {
 	s.startX = s.Rect().X
 	s.startY = s.Rect().Y
-	
+
 	s.mouseDownX = x
 	s.mouseDownY = y
-	
+
 	s.Button.MouseDown(x, y)
 }
 
@@ -44,16 +44,16 @@ func (s *ScrollButton) UpdateScrollChangeListener() {
 
 func (s *ScrollButton) MouseUp(x, y int) {
 	if !s.scrolling && !s.mouseDown && s.boundaries != nil && s.boundaries.Contains(x, y) {
-		newX := (s.boundaries.X + (x - s.boundaries.X)) - (s.Rect().Width/2)
+		newX := (s.boundaries.X + (x - s.boundaries.X)) - (s.Rect().Width / 2)
 		if newX >= s.boundaries.X && newX+s.Rect().Width <= s.boundaries.X+s.boundaries.Width {
 			s.Rect().X = newX
-		} 
-		
-		newY := (s.boundaries.Y + (y - s.boundaries.Y)) - (s.Rect().Height/2)
+		}
+
+		newY := (s.boundaries.Y + (y - s.boundaries.Y)) - (s.Rect().Height / 2)
 		if newY >= s.boundaries.Y && newY+s.Rect().Height <= s.boundaries.Y+s.boundaries.Height {
 			s.Rect().Y = newY
 		}
-		
+
 		s.UpdateScrollChangeListener()
 	}
 	s.scrolling = false
@@ -61,9 +61,9 @@ func (s *ScrollButton) MouseUp(x, y int) {
 }
 
 func (s *ScrollButton) MouseMove(x, y int) {
-	if s.boundaries != nil  && s.mouseDown {
+	if s.boundaries != nil && s.mouseDown {
 		s.scrolling = true
-		
+
 		newX := s.startX + (x - s.mouseDownX)
 		if newX >= s.boundaries.X && newX+s.Rect().Width <= s.boundaries.X+s.boundaries.Width {
 			s.Rect().X = newX
@@ -72,7 +72,7 @@ func (s *ScrollButton) MouseMove(x, y int) {
 		} else if newX > s.boundaries.X+s.boundaries.Width {
 			s.Rect().X = s.boundaries.Width - s.Rect().Width
 		}
-				
+
 		newY := s.startY + (y - s.mouseDownY)
 		if newY >= s.boundaries.Y && newY+s.Rect().Height <= s.boundaries.Y+s.boundaries.Height {
 			s.Rect().Y = newY
@@ -81,7 +81,7 @@ func (s *ScrollButton) MouseMove(x, y int) {
 		} else if newY > s.boundaries.Height {
 			s.Rect().Y = s.boundaries.Height
 		}
-		
+
 		s.UpdateScrollChangeListener()
 	}
 }

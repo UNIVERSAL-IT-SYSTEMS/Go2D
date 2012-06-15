@@ -4,19 +4,19 @@ import "github.com/genbattle/Go2D/sdl"
 
 type Button struct {
 	Element
-	
+
 	//Properties
 	BackgroundColor
 	ElementImage
 	TextElement
-	
+
 	//Listeners
 	OnClickListener
-	
+
 	//Members
-	caption string
+	caption   string
 	mouseDown bool
-	hover bool
+	hover     bool
 }
 
 func NewButton(x, y, width, height int, caption string) *Button {
@@ -39,32 +39,32 @@ func (b *Button) SetCaption(caption string) {
 func (b *Button) Draw(drawArea *Rect) {
 	realRect := NewRect(b.Rect().X+drawArea.X, b.Rect().Y+drawArea.Y, b.Rect().Width, b.Rect().Height)
 	inRect := drawArea.Intersection(realRect)
-	
+
 	if b.backgroundColor != nil {
 		DrawFillRect(inRect, b.backgroundColor.R, b.backgroundColor.G, b.backgroundColor.B, 255)
 	}
-	
+
 	var drawable *Image
 	switch {
-		case b.mouseDown && b.mouseDownImage != nil:
-			drawable = b.mouseDownImage
-			
-		case b.hover && b.hoverImage != nil:
-			drawable = b.hoverImage
-			
-		default:
-			drawable = b.image
+	case b.mouseDown && b.mouseDownImage != nil:
+		drawable = b.mouseDownImage
+
+	case b.hover && b.hoverImage != nil:
+		drawable = b.hoverImage
+
+	default:
+		drawable = b.image
 	}
 	if drawable != nil {
 		drawable.DrawRectInRect(b.Rect(), drawArea)
 	}
-	
-	if b.caption != "" &&  b.font != nil {
-		captionX := b.Rect().X+((b.Rect().Width/2)-(b.font.GetStringWidth(b.caption)/2));
-		captionY := b.Rect().Y+((b.Rect().Height/2)-(b.font.GetStringHeight()/2));
+
+	if b.caption != "" && b.font != nil {
+		captionX := b.Rect().X + ((b.Rect().Width / 2) - (b.font.GetStringWidth(b.caption) / 2))
+		captionY := b.Rect().Y + ((b.Rect().Height / 2) - (b.font.GetStringHeight() / 2))
 		b.font.SetStyle(b.bold, b.italic, b.underlined)
 		b.font.SetColor(b.fontColor.R, b.fontColor.G, b.fontColor.B)
-		b.font.DrawTextInRect(b.caption, drawArea.X + captionX, drawArea.Y + captionY, inRect)
+		b.font.DrawTextInRect(b.caption, drawArea.X+captionX, drawArea.Y+captionY, inRect)
 	}
 }
 

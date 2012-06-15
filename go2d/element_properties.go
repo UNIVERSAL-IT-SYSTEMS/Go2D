@@ -3,7 +3,7 @@ package go2d
 import "github.com/genbattle/Go2D/sdl"
 
 type BackgroundColor struct {
- 	backgroundColor *sdl.Color
+	backgroundColor *sdl.Color
 }
 
 func (b *BackgroundColor) BackgroundColor() *sdl.Color {
@@ -21,7 +21,7 @@ func (b *BackgroundColor) SetBackgroundColor(red, green, blue int) {
 }
 
 type BorderColor struct {
- 	borderColor *sdl.Color
+	borderColor *sdl.Color
 }
 
 func (b *BorderColor) BorderColor() *sdl.Color {
@@ -39,8 +39,8 @@ func (b *BorderColor) SetBorderColor(red, green, blue int) {
 }
 
 type ElementImage struct {
-	image *Image
-	hoverImage *Image
+	image          *Image
+	hoverImage     *Image
 	mouseDownImage *Image
 }
 
@@ -69,7 +69,7 @@ func (e *ElementImage) SetMouseDownImage(image *Image) {
 }
 
 type Value struct {
- 	value int
+	value int
 }
 
 func (v *Value) Value() int {

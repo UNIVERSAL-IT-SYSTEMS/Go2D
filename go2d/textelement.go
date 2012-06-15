@@ -1,10 +1,10 @@
 package go2d
- 
+
 import "github.com/genbattle/Go2D/sdl"
- 
+
 type TextElement struct {
-	font *Font
-	fontColor *sdl.Color
+	font                     *Font
+	fontColor                *sdl.Color
 	bold, italic, underlined bool
 }
 

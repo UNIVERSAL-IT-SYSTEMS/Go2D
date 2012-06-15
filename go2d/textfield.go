@@ -8,21 +8,21 @@ const (
 
 type TextField struct {
 	Element
-	
+
 	//Properties
 	BackgroundColor
 	BorderColor
 	ElementImage
 	TextElement
-	
+
 	//Listeners
 	OnKeyDownListener
-	
+
 	//Members
-	text string
-	readonly bool
-	password bool
-	caret bool
+	text      string
+	readonly  bool
+	password  bool
+	caret     bool
 	caretLast uint32
 }
 
@@ -69,7 +69,7 @@ func (t *TextField) KeyDown(button int) {
 			}
 		}
 	}
-	
+
 	if t.onKeyDown != nil {
 		t.onKeyDown(button)
 	}
@@ -77,7 +77,7 @@ func (t *TextField) KeyDown(button int) {
 
 func (t *TextField) TextInput(char uint8) {
 	if !t.readonly && t.focus {
-		if char != 0 && char > 31 { 
+		if char != 0 && char > 31 {
 			t.text += string(char)
 		}
 	}
@@ -86,24 +86,24 @@ func (t *TextField) TextInput(char uint8) {
 func (t *TextField) Draw(drawArea *Rect) {
 	realRect := NewRect(t.Rect().X+drawArea.X, t.Rect().Y+drawArea.Y, t.Rect().Width, t.Rect().Height)
 	inRect := drawArea.Intersection(realRect)
-	
+
 	if t.backgroundColor != nil {
 		DrawFillRect(inRect, t.backgroundColor.R, t.backgroundColor.G, t.backgroundColor.B, 255)
 	}
-	
+
 	if t.borderColor != nil {
 		DrawRect(inRect, t.borderColor.R, t.borderColor.G, t.borderColor.B, 255)
 	}
-	
+
 	if t.image != nil {
 		t.image.DrawRectInRect(t.Rect(), drawArea)
 	}
-	
+
 	caretX := 0
-	textX := t.Rect().X+(t.font.GetStringWidth(" "));
-	textY := t.Rect().Y+((t.Rect().Height/2)-(t.font.GetStringHeight()/2));
-	
-	if t.text != "" &&  t.font != nil {
+	textX := t.Rect().X + (t.font.GetStringWidth(" "))
+	textY := t.Rect().Y + ((t.Rect().Height / 2) - (t.font.GetStringHeight() / 2))
+
+	if t.text != "" && t.font != nil {
 		var drawText string
 		if t.password {
 			for i := 0; i < len(t.text); i++ {
@@ -115,11 +115,11 @@ func (t *TextField) Draw(drawArea *Rect) {
 
 		t.font.SetStyle(t.bold, t.italic, t.underlined)
 		t.font.SetColor(t.fontColor.R, t.fontColor.G, t.fontColor.B)
-		t.font.DrawTextInRect(drawText, drawArea.X + textX, drawArea.Y + textY, inRect)
-		
+		t.font.DrawTextInRect(drawText, drawArea.X+textX, drawArea.Y+textY, inRect)
+
 		caretX = t.font.GetStringWidth(drawText)
 	}
-	
+
 	//draw caret
 	if t.caret && !t.readonly && t.focus {
 		caretX += textX
@@ -140,4 +140,3 @@ func (t *TextField) MouseUp(x, y int) {
 		}
 	}
 }
-

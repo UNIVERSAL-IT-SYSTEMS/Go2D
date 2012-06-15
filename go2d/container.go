@@ -18,13 +18,13 @@ func (c *Container) Init(x, y, width, height int) {
 func (c *Container) FillFocusList(elements *[]IElement) {
 	for _, child := range c.children {
 		switch childType := child.(type) {
-			case IContainer:
-				childType.FillFocusList(elements)
-				
-			default:
-				if child.Focusable() {
-					*elements = append(*elements, child)
-				}
+		case IContainer:
+			childType.FillFocusList(elements)
+
+		default:
+			if child.Focusable() {
+				*elements = append(*elements, child)
+			}
 		}
 	}
 }
@@ -54,10 +54,10 @@ func (c *Container) Draw(drawArea *Rect) {
 	childDrawArea.Y += c.Rect().Y
 	childDrawArea.Width = c.Rect().Width
 	childDrawArea.Height = c.Rect().Height
-	
+
 	for _, child := range c.Children() {
 		if child.Visible() {
-			child.Draw(childDrawArea) 
+			child.Draw(childDrawArea)
 		}
 	}
 }
@@ -65,7 +65,7 @@ func (c *Container) Draw(drawArea *Rect) {
 func (c *Container) MouseDown(x, y int) {
 	for _, child := range c.Children() {
 		if child.Visible() {
-			child.MouseDown(x - c.Rect().X, y - c.Rect().Y)
+			child.MouseDown(x-c.Rect().X, y-c.Rect().Y)
 		}
 	}
 }
@@ -73,7 +73,7 @@ func (c *Container) MouseDown(x, y int) {
 func (c *Container) MouseUp(x, y int) {
 	for _, child := range c.Children() {
 		if child.Visible() {
-			child.MouseUp(x - c.Rect().X, y - c.Rect().Y)
+			child.MouseUp(x-c.Rect().X, y-c.Rect().Y)
 		}
 	}
 }
@@ -81,7 +81,7 @@ func (c *Container) MouseUp(x, y int) {
 func (c *Container) MouseMove(x, y int) {
 	for _, child := range c.Children() {
 		if child.Visible() {
-			child.MouseMove(x - c.Rect().X, y - c.Rect().Y)
+			child.MouseMove(x-c.Rect().X, y-c.Rect().Y)
 		}
 	}
 }
