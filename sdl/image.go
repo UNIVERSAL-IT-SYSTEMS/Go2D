@@ -6,9 +6,9 @@ package sdl
 */
 import "C"
 import (
+	"errors"
 	"fmt"
 	"unsafe"
-	"errors"
 )
 
 type Surface C.SDL_Surface
