@@ -14,7 +14,8 @@ func start() {
 	image, err = go2d.NewImage("test.png")
 	checkError(err)
 
-	arial16 = go2d.NewFont("arial.ttf", 16)
+	arial16, err = go2d.NewFont("arial.ttf", 16)
+	checkError(err)
 	arial16.SetStyle(true, false, false)
 	arial16.SetColor(255, 255, 255)
 }

@@ -2,7 +2,10 @@ package sdl
 
 // #include <SDL/SDL_ttf.h>
 import "C"
-import "unsafe"
+import (
+	"errors"
+	"unsafe"
+)
 
 func InitTTF() int {
 	return int(C.TTF_Init())
@@ -14,14 +17,14 @@ func QuitTTF() {
 
 type Font C.TTF_Font
 
-func LoadFont(_file string, _size int) *Font {
+func LoadFont(_file string, _size int) (*Font, error) {
 	cfile := C.CString(_file)
 	defer C.free(unsafe.Pointer(cfile))
 	font := C.TTF_OpenFont(cfile, C.int(_size))
 	if font == nil {
-		return nil
+		return nil, errors.New("Font load error: " + GetError())
 	}
-	return (*Font)(cast(font))
+	return (*Font)(cast(font)), nil
 }
 
 func (f *Font) Get() *C.TTF_Font {

@@ -19,7 +19,8 @@ var (
 
 func start() {
 	//Load up our default font for GUI text elements
-	arial := go2d.NewFont("arial.ttf", 14)
+	arial, err := go2d.NewFont("arial.ttf", 14)
+	checkError(err)
 	arial.SetStyle(true, false, false)
 	arial.SetColor(255, 255, 255)
 
