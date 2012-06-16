@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"github.com/genbattle/Go2D/go2d"
 )
 
@@ -28,7 +29,6 @@ func start() {
 	g_window = g_game.InitGUI(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, arial)
 
 	//Set up some elements
-
 	//A panel
 	panel := go2d.NewPanel(20, 20, 200, 200)
 	panel.SetBackgroundColor(80, 80, 255)
@@ -47,7 +47,7 @@ func start() {
 	button.SetFontColor(80, 80, 80)
 	button.SetBackgroundColor(80, 255, 80)
 	button.SetOnClickListener(func(x, y int) {
-		println("Button clicked!")
+		fmt.Println("Button clicked!")
 	})
 	panel.AddChild(button)
 
@@ -67,7 +67,7 @@ func start() {
 	panel.AddChild(password)
 
 	g_window.AddChild(panel)
-
+	
 	//A customized button
 	customButton := go2d.NewButton(20, 240, 186, 52, "")
 	loadedImage, err := go2d.NewImage("button_normal.png")
@@ -91,7 +91,7 @@ func start() {
 }
 
 func CustomButtonOnClick(x, y int) {
-	println("Custom button clicked!")
+	fmt.Println("Custom button clicked!")
 }
 
 func update(dt uint32) {
@@ -106,6 +106,7 @@ func checkError(err error) {
 	if err != nil {
 		fmt.Println(err.Error())
 		g_game.Exit()
+		os.Exit(1)
 	}
 }
 
@@ -113,10 +114,8 @@ func main() {
 	g_game = go2d.NewGame("Test Game")
 	g_game.SetDimensions(WINDOW_WIDTH, WINDOW_HEIGHT)
 	g_game.SetD3D(true)
-
 	g_game.SetInitFun(start)
 	g_game.SetUpdateFun(update)
 	g_game.SetDrawFun(draw)
-
 	g_game.Run()
 }

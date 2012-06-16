@@ -20,11 +20,12 @@ func NewFont(_file string, _size int) (*Font, error) {
 	if err != nil {
 		return nil, err
 	}
-	f := &Font{font: sdlfont,
+	f := &Font {
+		font: sdlfont,
 		fontmap: make(map[uint32]map[uint16]*Image),
 		color:   &sdl.Color{255, 255, 255, 255},
 		alpha:   255,
-		size:    _size}
+		size:    _size }
 	addResource(f)
 	f.build()
 	return f, nil

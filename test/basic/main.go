@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"github.com/genbattle/Go2D/go2d"
 )
 
@@ -55,6 +56,7 @@ func checkError(err error) {
 	if err != nil {
 		fmt.Println(err.Error())
 		game.Exit()
+		os.Exit(1)
 	}
 }
 
