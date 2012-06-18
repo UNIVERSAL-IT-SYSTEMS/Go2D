@@ -21,3 +21,7 @@ func GL_SetSwapInterval(_interval int) error {
 	}
 	return nil
 }
+
+func GL_SwapWindow(_win *Window) {
+	C.SDL_GL_SwapWindow(_win.window)
+}
