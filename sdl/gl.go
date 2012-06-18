@@ -15,6 +15,10 @@ func GL_CreateContext(_win *Window) *GLContext {
 	return &context
 }
 
+func GL_DeleteContext(_context *GLContext) {
+	C.SDL_GL_DeleteContext(C.SDL_GLContext(_context))
+}
+
 func GL_SetSwapInterval(_interval int) error {
 	if C.SDL_GL_SetSwapInterval(C.int(_interval)) != 0 {
 		return errors.New(GetError())
