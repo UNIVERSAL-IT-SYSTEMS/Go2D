@@ -97,10 +97,9 @@ func (game *Game) initialize() {
 		fmt.Println(err.Error())
 	}
 	//Create the window
-	var errString string
-	game.window, errString = sdl.CreateWindow(game.title, game.width, game.height)
-	if errString != "" {
-		panic(fmt.Sprintf("Go2D Error: Creating window: %s", errString))
+	game.window, err = sdl.CreateWindow(game.title, sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, game.width, game.height, sdl.WINDOW_SHOWN | sdl.WINDOW_OPENGL)
+	if err != nil {
+		panic(fmt.Sprintf("Go2D Error: Creating window: %s", err.Error()))
 	}
 
 	//Create the renderer
@@ -125,7 +124,8 @@ func (game *Game) initialize() {
 	if game.d3d && d3dIndex != -1 {
 		rendererIndex = d3dIndex
 	}
-
+	
+	var errString string
 	game.renderer, errString = sdl.CreateRenderer(game.window, rendererIndex)
 	if errString != "" {
 		panic(fmt.Sprintf("Go2D Error: Creating renderer: %s", errString))

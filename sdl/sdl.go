@@ -48,19 +48,19 @@ type Window struct {
 	window *C.SDL_Window
 }
 
-func CreateWindow(_title string, _width int, _height int) (*Window, string) {
+func CreateWindow(_title string, _x int, _y int, _width int, _height int, _flags uint32) (*Window, error) {
 	ctitle := C.CString(_title)
 	var window *C.SDL_Window = C.SDL_CreateWindow(ctitle,
-		C.SDL_WINDOWPOS_CENTERED,
-		C.SDL_WINDOWPOS_CENTERED,
+		C.int(_x),
+		C.int(_y),
 		C.int(_width),
 		C.int(_height),
-		C.SDL_WINDOW_SHOWN|C.SDL_WINDOW_OPENGL)
+		C.Uint32(_flags))
 	C.free(unsafe.Pointer(ctitle))
 	if window == nil {
-		return nil, GetError()
+		return nil, errors.New(GetError())
 	}
-	return &Window{window}, ""
+	return &Window{window}, nil
 }
 
 func DestroyWindow(_window *Window) {
