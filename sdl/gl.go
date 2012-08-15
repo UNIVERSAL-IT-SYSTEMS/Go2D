@@ -20,7 +20,7 @@ func GL_DeleteContext(_context *GLContext) {
 }
 
 func GL_SetSwapInterval(_interval int) error {
-	if C.SDL_GL_SetSwapInterval(C.int(_interval)) != 0 {
+	if C.SDL_GL_SetSwapInterval(C.int(_interval)) < 0 {
 		return errors.New(GetError())
 	}
 	return nil
