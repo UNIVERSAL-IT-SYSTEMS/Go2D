@@ -7,12 +7,21 @@ If you don't want to spend time compiling SDL, but just start on your game right
 Installation of SDL 2.0 (note: OpenGL renderer needs OpenGL libraries, e.g. mesa on Ubuntu):
 1) hg clone http://hg.libsdl.org/SDL
 2) autogen.sh
+3) mkdir build && cd build
+3) 	../configure --prefix=/usr for Ubuntu
+	../configure --prefix=/mingw for Windows/MinGW
+4) make
+5) make install
+
+Freetype 2.0 (dependency for SDL_ttf):
+1) download the latest version from http://sourceforge.net/projects/freetype/files/freetype2/
+2) autogen.sh
 3) 	./configure --prefix=/usr for Ubuntu
 	./configure --prefix=/mingw for Windows/MinGW
 4) make
 5) make install
 
-Installation of SDL_ttf (this also requires FreeType 2.0):
+Installation of SDL_ttf:
 1) hg clone http://hg.libsdl.org/SDL_ttf/
 2) autogen.sh
 3) 	./configure --prefix=/usr for Ubuntu
@@ -27,13 +36,15 @@ Installation of SDL_image (note: PNG loading also requires libpng and libz):
 5) make install
 
 Installation of Go2D:
-1) go get github.com/genbattle/Go2D/sdl
-2) go get github.com/genbattle/Go2D/go2d
+1) go get github.com/papplampe/Go2D/sdl
+2) go get github.com/papplampe/Go2D/go2d
 3) For Examples:
-	go get github.com/genbattle/Go2D/test
-
+	go get github.com/papplampe/Go2D/test/basic
+	go get github.com/papplampe/Go2D/test/gui
+	In case you get an renderer error try to SetD3D to false
+	
 To install both sdl and go2d:
-	go get github.com/genbattle/Go2D/...
+	go get github.com/papplampe/Go2D/...
 
 Usage:
 Check out /skeleton and ./test for examples.

@@ -1,6 +1,6 @@
 package sdl
 
-// #include <SDL/SDL_ttf.h>
+// #include <SDL2/SDL_ttf.h>
 import "C"
 import (
 //	"errors"

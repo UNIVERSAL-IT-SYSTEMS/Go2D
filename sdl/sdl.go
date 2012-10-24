@@ -1,6 +1,6 @@
 package sdl
 
-// #cgo LDFLAGS: -lSDL2 -lpthread -lSDL_ttf -lSDL_image
+// #cgo LDFLAGS: -lSDL2 -lpthread -lSDL2_ttf -lSDL2_image
 // #cgo CFLAGS: -D_REENTRANT
 // #include <SDL2/SDL.h>
 import "C"

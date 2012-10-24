@@ -6,9 +6,6 @@ import (
 
 func EventHandler(_event *sdl.SDLEvent) {
 	switch _event.Evtype {
-	case sdl.WINDOWEVENT:
-		HandleWindowEvent(_event.Window())
-
 	case sdl.KEYDOWN, sdl.TEXTINPUT:
 		HandleKeyboardEvent(_event.Keyboard())
 
@@ -20,12 +17,8 @@ func EventHandler(_event *sdl.SDLEvent) {
 
 	case sdl.MOUSEWHEEL:
 		HandleMouseWheelEvent(_event.MouseWheel())
-	}
-}
-
-func HandleWindowEvent(_event *sdl.WindowEvent) {
-	switch _event.Event {
-	case sdl.WINDOWEVENT_CLOSE:
+		
+	case 256: // Exit
 		g_running = false
 	}
 }
