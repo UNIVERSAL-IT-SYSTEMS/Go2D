@@ -1,13 +1,14 @@
 package sdl
 
 /*
-#include "SDL.h"
-#include "SDL_image.h" 
+#include <SDL2/SDL.h>
+#include <SDL/SDL_image.h> 
 */
 import "C"
 import (
-	"unsafe"
+	"errors"
 	"fmt"
+	"unsafe"
 )
 
 type Surface C.SDL_Surface
@@ -25,33 +26,40 @@ func (s *Surface) CreateTexture(_renderer *Renderer) *Texture {
 	return (*Texture)(cast(tex))
 }
 
+// TODO(Nick): Figure out how this is now done in SDL2, since this method has been removed
+/* // DEPRECATED
 func (s *Surface) DisplayFormatAlpha() *Surface {
 	return (*Surface)(C.SDL_DisplayFormatAlpha(s.Get()))
 }
-
+*/
 func (s *Surface) SaveBMP(_file string) {
-	cfile := C.CString(_file); defer C.free(unsafe.Pointer(cfile))
-	cparams := C.CString("wb"); defer C.free(unsafe.Pointer(cparams))
-	C.SDL_SaveBMP_RW(s.Get(), C.SDL_RWFromFile(cfile, cparams), C.int(1))  
+	cfile := C.CString(_file)
+	defer C.free(unsafe.Pointer(cfile))
+	cparams := C.CString("wb")
+	defer C.free(unsafe.Pointer(cparams))
+	C.SDL_SaveBMP_RW(s.Get(), C.SDL_RWFromFile(cfile, cparams), C.int(1))
 }
 
 func LoadBMP(_file string) *Surface {
-	cfile := C.CString(_file); defer C.free(unsafe.Pointer(cfile))
-	cparams := C.CString("rb"); defer C.free(unsafe.Pointer(cparams))
+	cfile := C.CString(_file)
+	defer C.free(unsafe.Pointer(cfile))
+	cparams := C.CString("rb")
+	defer C.free(unsafe.Pointer(cparams))
 	return (*Surface)(C.SDL_LoadBMP_RW(C.SDL_RWFromFile(cfile, cparams), C.int(1)))
 }
 
-func LoadImage(_file string) *Surface {
-	cfile := C.CString(_file); defer C.free(unsafe.Pointer(cfile))
+func LoadImage(_file string) (*Surface, error) {
+	cfile := C.CString(_file)
+	defer C.free(unsafe.Pointer(cfile))
 	img := C.IMG_Load(cfile)
 	if img == nil {
-		fmt.Printf("Image load error: %v", C.GoString(C.IMG_GetError()))
+		return nil, errors.New("Image load error: " + C.GoString(C.IMG_GetError()))
 	}
-	return (*Surface)(cast(img))
+	return (*Surface)(cast(img)), nil
 }
 
 func LoadImageRW(_data *[]byte, _size int) *Surface {
-	rawImage := C.SDL_RWFromMem(unsafe.Pointer(&((*_data)[0])), C.int(_size));
+	rawImage := C.SDL_RWFromMem(unsafe.Pointer(&((*_data)[0])), C.int(_size))
 	img := C.IMG_Load_RW(rawImage, C.int(0))
 	if img == nil {
 		fmt.Printf("ImageRW load error: %v", C.GoString(C.IMG_GetError()))
@@ -67,8 +75,8 @@ type Rect struct {
 }
 
 type Color struct {
-	R uint8
-	G uint8
-	B uint8
+	R      uint8
+	G      uint8
+	B      uint8
 	Unused uint8
 }

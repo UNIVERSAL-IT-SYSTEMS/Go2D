@@ -1,63 +1,63 @@
 package go2d
 
 import (
-	"sdl"
+	"github.com/genbattle/Go2D/sdl"
 )
 
 func EventHandler(_event *sdl.SDLEvent) {
 	switch _event.Evtype {
-	case sdl.SDL_WINDOWEVENT:
+	case sdl.WINDOWEVENT:
 		HandleWindowEvent(_event.Window())
 
-	case sdl.SDL_KEYDOWN, sdl.SDL_TEXTINPUT:
+	case sdl.KEYDOWN, sdl.TEXTINPUT:
 		HandleKeyboardEvent(_event.Keyboard())
 
-	case sdl.SDL_MOUSEBUTTONUP, sdl.SDL_MOUSEBUTTONDOWN:
+	case sdl.MOUSEBUTTONUP, sdl.MOUSEBUTTONDOWN:
 		HandleMouseButtonEvent(_event.MouseButton())
 
-	case sdl.SDL_MOUSEMOTION:
+	case sdl.MOUSEMOTION:
 		HandleMouseMotionEvent(_event.MouseMotion())
 
-	case sdl.SDL_MOUSEWHEEL:
+	case sdl.MOUSEWHEEL:
 		HandleMouseWheelEvent(_event.MouseWheel())
 	}
 }
 
 func HandleWindowEvent(_event *sdl.WindowEvent) {
 	switch _event.Event {
-	case sdl.SDL_WINDOWEVENT_CLOSE:
+	case sdl.WINDOWEVENT_CLOSE:
 		g_running = false
 	}
 }
 
 func HandleKeyboardEvent(_event *sdl.KeyboardEvent) {
 	switch _event.Evtype {
-	case sdl.SDL_KEYDOWN:
+	case sdl.KEYDOWN:
 		if g_game.keydownFun != nil {
 			g_game.keydownFun(int(_event.Keysym().Scancode))
 		}
-		
+
 		if g_game.guiManager != nil {
 			g_game.guiManager.KeyDown(int(_event.Keysym().Scancode))
 		}
-		
-	case sdl.SDL_KEYUP:
+
+	case sdl.KEYUP:
 		if g_game.keyupFun != nil {
 			g_game.keyupFun(int(_event.Keysym().Scancode))
 		}
-		
+
 		if g_game.guiManager != nil {
 			g_game.guiManager.KeyUp(int(_event.Keysym().Scancode))
 		}
 
-	case sdl.SDL_TEXTINPUT:
+	case sdl.TEXTINPUT:
 		keysym := uint8(_event.State)
 		if keysym != 0 && keysym > 31 {
 			if g_game.textinputFun != nil {
 				g_game.textinputFun(keysym)
 			}
 		}
-		
+
 		if g_game.guiManager != nil {
 			g_game.guiManager.TextInput(keysym)
 		}
@@ -66,20 +66,20 @@ func HandleKeyboardEvent(_event *sdl.KeyboardEvent) {
 
 func HandleMouseButtonEvent(_event *sdl.MouseButtonEvent) {
 	switch _event.Evtype {
-	case sdl.SDL_MOUSEBUTTONUP:
+	case sdl.MOUSEBUTTONUP:
 		if g_game.mouseupFun != nil {
 			g_game.mouseupFun(int16(_event.X), int16(_event.Y))
 		}
-		
+
 		if g_game.guiManager != nil {
 			g_game.guiManager.MouseUp(int(_event.X), int(_event.Y))
 		}
-		
-	case sdl.SDL_MOUSEBUTTONDOWN:
+
+	case sdl.MOUSEBUTTONDOWN:
 		if g_game.mousedownFun != nil {
 			g_game.mousedownFun(int16(_event.X), int16(_event.Y))
 		}
-		
+
 		if g_game.guiManager != nil {
 			g_game.guiManager.MouseDown(int(_event.X), int(_event.Y))
 		}
@@ -90,7 +90,7 @@ func HandleMouseMotionEvent(_event *sdl.MouseMotionEvent) {
 	if g_game.mousemoveFun != nil {
 		g_game.mousemoveFun(int16(_event.X), int16(_event.Y))
 	}
-	
+
 	if g_game.guiManager != nil {
 		g_game.guiManager.MouseMove(int(_event.X), int(_event.Y))
 	}
@@ -103,11 +103,11 @@ func HandleMouseWheelEvent(_event *sdl.MouseWheelEvent) {
 	} else if (0 - _event.Y) > 0 {
 		direction = sdl.SCROLL_DOWN
 	}
-	
+
 	if g_game.mousescrollFun != nil {
 		g_game.mousescrollFun(direction)
 	}
-	
+
 	if g_game.guiManager != nil {
 		g_game.guiManager.MouseScroll(direction)
 	}

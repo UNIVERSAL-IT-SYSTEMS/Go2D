@@ -2,7 +2,7 @@ package go2d
 
 import (
 	"fmt"
-	"sdl"
+	"github.com/genbattle/Go2D/sdl"
 )
 
 type Font struct {
@@ -15,19 +15,20 @@ type Font struct {
 }
 
 //Load font from file and specify font size (each font-size needs a seperate font instance)
-func NewFont(_file string, _size int) *Font {
-	sdlfont := sdl.LoadFont(_file, _size)
-	if sdlfont == nil {
-		fmt.Printf("Go2D Error: Loading Font: %v", sdl.GetError())
+func NewFont(_file string, _size int) (*Font, error) {
+	sdlfont, err := sdl.LoadFont(_file, _size)
+	if err != nil {
+		return nil, err
 	}
-	f := &Font{font: sdlfont,
+	f := &Font {
+		font: sdlfont,
 		fontmap: make(map[uint32]map[uint16]*Image),
 		color:   &sdl.Color{255, 255, 255, 255},
 		alpha:   255,
-		size:    _size}
+		size:    _size }
 	addResource(f)
 	f.build()
-	return f
+	return f, nil
 }
 
 //Internal: release the font resource

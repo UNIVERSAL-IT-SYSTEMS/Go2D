@@ -1,10 +1,10 @@
 package go2d
 
 import (
-	"sdl"
-	"exec"
-	"path"
+	"github.com/genbattle/Go2D/sdl"
 	"os"
+	"os/exec"
+	"path"
 )
 
 func Sleep(_ticks uint32) {
@@ -50,5 +50,3 @@ func DrawLine(_red, _green, _blue, _alpha uint8, _x1, _y1, _x2, _y2 int) {
 	sdl.SetRenderDrawBlendMode(g_game.renderer, sdl.BLENDMODE_NONE)
 	sdl.SetRenderDrawColor(g_game.renderer, 0, 0, 0, 255)
 }
-
-

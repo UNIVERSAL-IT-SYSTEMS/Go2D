@@ -1,7 +1,7 @@
 package go2d
 
 type GUIManager struct {
-	root *Window
+	root        *Window
 	defaultFont *Font
 }
 
