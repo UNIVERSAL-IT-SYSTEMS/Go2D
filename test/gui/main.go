@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/genbattle/Go2D/go2d"
+	"github.com/papplampe/Go2D/go2d"
 )
 
 //Constants

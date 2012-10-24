@@ -1,6 +1,6 @@
 package go2d
 
-import "github.com/genbattle/Go2D/sdl"
+import "github.com/papplampe/Go2D/sdl"
 
 const (
 	BLENDMODE_NONE  = sdl.BLENDMODE_NONE

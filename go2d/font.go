@@ -2,7 +2,7 @@ package go2d
 
 import (
 	"fmt"
-	"github.com/genbattle/Go2D/sdl"
+	"github.com/papplampe/Go2D/sdl"
 )
 
 type Font struct {

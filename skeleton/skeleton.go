@@ -1,6 +1,6 @@
 package main
 
-import "github.com/genbattle/Go2D/go2d"
+import "github.com/papplampe/Go2D/go2d"
 
 func start() {
 	//load resources here

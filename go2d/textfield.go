@@ -1,6 +1,6 @@
 package go2d
 
-import "github.com/genbattle/Go2D/sdl"
+import "github.com/papplampe/Go2D/sdl"
 
 const (
 	CARET_TIME = 500
