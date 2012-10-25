@@ -48,6 +48,14 @@ type Window struct {
 	window *C.SDL_Window
 }
 
+func (window *Window) SetFullscreen(fullscreen bool) {
+	var _fullscreen int
+	if fullscreen {
+		_fullscreen = 1
+	}
+	C.SDL_SetWindowFullscreen(window.window, C.SDL_bool(_fullscreen))
+}
+
 func CreateWindow(_title string, _x int, _y int, _width int, _height int, _flags uint32) (*Window, error) {
 	ctitle := C.CString(_title)
 	var window *C.SDL_Window = C.SDL_CreateWindow(ctitle,

@@ -27,6 +27,7 @@ type Game struct {
 	title         string
 	width, height int
 	d3d           bool
+	fullscreen    bool
 
 	window   *sdl.Window
 	renderer *sdl.Renderer
@@ -89,6 +90,13 @@ func (game *Game) SetTextInputFun(_textinput func(uint8)) {
 	game.textinputFun = _textinput
 }
 
+func (game *Game) SetFullscreen(_fullscreen bool) {
+	game.fullscreen = _fullscreen
+	if g_running {
+		game.window.SetFullscreen(game.fullscreen)
+	}
+}
+
 //Internal initalization (executes when game starts)
 func (game *Game) initialize() {
 	// Initialize SDL
@@ -97,7 +105,11 @@ func (game *Game) initialize() {
 		fmt.Println(err.Error())
 	}
 	//Create the window
-	game.window, err = sdl.CreateWindow(game.title, sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, game.width, game.height, sdl.WINDOW_SHOWN | sdl.WINDOW_OPENGL)
+	flags := uint32(sdl.WINDOW_SHOWN | sdl.WINDOW_OPENGL)
+	if game.fullscreen {
+		flags |= sdl.WINDOW_FULLSCREEN
+	}
+	game.window, err = sdl.CreateWindow(game.title, sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, game.width, game.height, flags)
 	if err != nil {
 		panic(fmt.Sprintf("Go2D Error: Creating window: %s", err.Error()))
 	}
@@ -229,6 +241,8 @@ func (game *Game) Run() {
 
 //Release all resources
 func (game *Game) Exit() {
+	g_running = false
+
 	freeResources()
 
 	//Destroy the renderer
