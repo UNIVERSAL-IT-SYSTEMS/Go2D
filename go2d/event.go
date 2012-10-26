@@ -6,45 +6,29 @@ import (
 
 func EventHandler(_event *sdl.SDLEvent) {
 	switch _event.Evtype {
-	case sdl.KEYDOWN, sdl.TEXTINPUT:
-		HandleKeyboardEvent(_event.Keyboard())
-
-	case sdl.MOUSEBUTTONUP, sdl.MOUSEBUTTONDOWN:
-		HandleMouseButtonEvent(_event.MouseButton())
-
-	case sdl.MOUSEMOTION:
-		HandleMouseMotionEvent(_event.MouseMotion())
-
-	case sdl.MOUSEWHEEL:
-		HandleMouseWheelEvent(_event.MouseWheel())
-		
-	case 256: // Exit
-		g_running = false
-	}
-}
-
-func HandleKeyboardEvent(_event *sdl.KeyboardEvent) {
-	switch _event.Evtype {
 	case sdl.KEYDOWN:
+		keyboard := _event.Keyboard()
 		if g_game.keydownFun != nil {
-			g_game.keydownFun(int(_event.Keysym().Scancode))
+			g_game.keydownFun(int(keyboard.Keysym().Scancode))
 		}
 
 		if g_game.guiManager != nil {
-			g_game.guiManager.KeyDown(int(_event.Keysym().Scancode))
+			g_game.guiManager.KeyDown(int(keyboard.Keysym().Scancode))
 		}
-
+		
 	case sdl.KEYUP:
+		keyboard := _event.Keyboard()
 		if g_game.keyupFun != nil {
-			g_game.keyupFun(int(_event.Keysym().Scancode))
+			g_game.keyupFun(int(keyboard.Keysym().Scancode))
 		}
 
 		if g_game.guiManager != nil {
-			g_game.guiManager.KeyUp(int(_event.Keysym().Scancode))
+			g_game.guiManager.KeyUp(int(keyboard.Keysym().Scancode))
 		}
-
+		
 	case sdl.TEXTINPUT:
-		keysym := uint8(_event.State)
+		keyboard := _event.Keyboard()
+		keysym := uint8(keyboard.State)
 		if keysym != 0 && keysym > 31 {
 			if g_game.textinputFun != nil {
 				g_game.textinputFun(keysym)
@@ -54,54 +38,55 @@ func HandleKeyboardEvent(_event *sdl.KeyboardEvent) {
 		if g_game.guiManager != nil {
 			g_game.guiManager.TextInput(keysym)
 		}
-	}
-}
-
-func HandleMouseButtonEvent(_event *sdl.MouseButtonEvent) {
-	switch _event.Evtype {
+		
 	case sdl.MOUSEBUTTONUP:
+		mouse := _event.MouseButton()
 		if g_game.mouseupFun != nil {
-			g_game.mouseupFun(int16(_event.X), int16(_event.Y))
+			g_game.mouseupFun(int16(mouse.X), int16(mouse.Y))
 		}
 
 		if g_game.guiManager != nil {
-			g_game.guiManager.MouseUp(int(_event.X), int(_event.Y))
+			g_game.guiManager.MouseUp(int(mouse.X), int(mouse.Y))
 		}
-
+		
 	case sdl.MOUSEBUTTONDOWN:
+		mouse := _event.MouseButton()
 		if g_game.mousedownFun != nil {
-			g_game.mousedownFun(int16(_event.X), int16(_event.Y))
+			g_game.mousedownFun(int16(mouse.X), int16(mouse.Y))
 		}
 
 		if g_game.guiManager != nil {
-			g_game.guiManager.MouseDown(int(_event.X), int(_event.Y))
+			g_game.guiManager.MouseDown(int(mouse.X), int(mouse.Y))
 		}
-	}
-}
+		
+	case sdl.MOUSEMOTION:
+		mouse := _event.MouseMotion()
+		if g_game.mousemoveFun != nil {
+			g_game.mousemoveFun(int16(mouse.X), int16(mouse.Y))
+		}
 
-func HandleMouseMotionEvent(_event *sdl.MouseMotionEvent) {
-	if g_game.mousemoveFun != nil {
-		g_game.mousemoveFun(int16(_event.X), int16(_event.Y))
-	}
+		if g_game.guiManager != nil {
+			g_game.guiManager.MouseMove(int(mouse.X), int(mouse.Y))
+		}
+		
+	case sdl.MOUSEWHEEL:
+		mouse := _event.MouseWheel()
+		direction := 0
+		if 0-mouse.Y < 0 {
+			direction = sdl.SCROLL_UP
+		} else if (0 - mouse.Y) > 0 {
+			direction = sdl.SCROLL_DOWN
+		}
 
-	if g_game.guiManager != nil {
-		g_game.guiManager.MouseMove(int(_event.X), int(_event.Y))
-	}
-}
+		if g_game.mousescrollFun != nil {
+			g_game.mousescrollFun(direction)
+		}
 
-func HandleMouseWheelEvent(_event *sdl.MouseWheelEvent) {
-	direction := 0
-	if 0-_event.Y < 0 {
-		direction = sdl.SCROLL_UP
-	} else if (0 - _event.Y) > 0 {
-		direction = sdl.SCROLL_DOWN
-	}
-
-	if g_game.mousescrollFun != nil {
-		g_game.mousescrollFun(direction)
-	}
-
-	if g_game.guiManager != nil {
-		g_game.guiManager.MouseScroll(direction)
+		if g_game.guiManager != nil {
+			g_game.guiManager.MouseScroll(direction)
+		}
+		
+	case sdl.QUIT:
+		g_game.Exit()
 	}
 }

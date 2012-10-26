@@ -7,7 +7,6 @@ import (
 
 //Instance
 var g_game *Game
-var g_running bool
 
 //Basic game type
 
@@ -28,6 +27,7 @@ type Game struct {
 	width, height int
 	d3d           bool
 	fullscreen    bool
+	running       bool
 
 	window   *sdl.Window
 	renderer *sdl.Renderer
@@ -92,7 +92,7 @@ func (game *Game) SetTextInputFun(_textinput func(uint8)) {
 
 func (game *Game) SetFullscreen(_fullscreen bool) {
 	game.fullscreen = _fullscreen
-	if g_running {
+	if game.running {
 		game.window.SetFullscreen(game.fullscreen)
 	}
 }
@@ -151,7 +151,7 @@ func (game *Game) initialize() {
 		game.initFun()
 	}
 
-	g_running = true
+	game.running = true
 }
 
 //Internal update function
@@ -212,7 +212,7 @@ func (game *Game) Run() {
 
 	var dt, old_t, now_t uint32 = 0, 0, 0
 
-	for g_running {
+	for game.running {
 		//Check for events and handle them
 		for {
 			event, present := sdl.PollEvent()
@@ -241,7 +241,7 @@ func (game *Game) Run() {
 
 //Release all resources
 func (game *Game) Exit() {
-	g_running = false
+	game.running = false
 
 	freeResources()
 

@@ -5,7 +5,7 @@ import "C"
 
 type SDLEvent struct {
 	Evtype uint32
-	rest   [48]byte
+	rest   [56]byte
 }
 
 func (e *SDLEvent) Window() *WindowEvent {
@@ -49,24 +49,26 @@ func (e *SDLEvent) SysWM() *SysWMEvent {
 }
 
 type WindowEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	Event    uint8
-	Padding1 uint8
-	Padding2 uint8
-	Padding3 uint8
-	Data1    int32
-	Data2    int32
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	Event     uint8
+	Padding1  uint8
+	Padding2  uint8
+	Padding3  uint8
+	Data1     int32
+	Data2     int32
 }
 
 type KeyboardEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	State    uint8
-	Repeat   uint8
-	Padding2 uint8
-	Padding3 uint8
-	keysym   C.SDL_Keysym
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	State     uint8
+	Repeat    uint8
+	Padding2  uint8
+	Padding3  uint8
+	keysym    C.SDL_Keysym
 }
 
 func (e *KeyboardEvent) Keysym() *KeySym {
@@ -74,8 +76,8 @@ func (e *KeyboardEvent) Keysym() *KeySym {
 }
 
 type KeySym struct {
-	Scancode int32 //C.enum_SDL_scancode
-	Sym      int32
+	Scancode uint32 //C.enum_SDL_scancode
+	Sym      uint32
 	Mod      uint16
 	Unicode  uint32
 }
