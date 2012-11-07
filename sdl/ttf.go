@@ -3,7 +3,6 @@ package sdl
 // #include <SDL2/SDL_ttf.h>
 import "C"
 import (
-//	"errors"
 	"unsafe"
 )
 
@@ -21,9 +20,6 @@ func LoadFont(_file string, _size int) (*Font, error) {
 	cfile := C.CString(_file)
 	defer C.free(unsafe.Pointer(cfile))
 	font := C.TTF_OpenFont(cfile, C.int(_size))
-	/*if len((*font)) == 0 {
-		return nil, errors.New("Font load error: " + GetError())
-	}*/
 	return (*Font)(font), nil
 }
 

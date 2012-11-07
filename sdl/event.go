@@ -83,48 +83,53 @@ type KeySym struct {
 }
 
 type TextEditingEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	Text     [32]byte
-	Start    int32
-	Length   int32
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	Text      [32]byte
+	Start     int32
+	Length    int32
 }
 
 type TextInputEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	Text     [32]byte
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	Text      [32]byte
 }
 
 type MouseMotionEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	State    uint8
-	Padding1 uint8
-	Padding2 uint8
-	Padding3 uint8
-	X        int32
-	Y        int32
-	Xrel     int32
-	Yrel     int32
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	State     uint8
+	Padding1  uint8
+	Padding2  uint8
+	Padding3  uint8
+	X         int32
+	Y         int32
+	Xrel      int32
+	Yrel      int32
 }
 
 type MouseButtonEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	Button   uint8
-	State    uint8
-	Padding1 uint8
-	Padding2 uint8
-	X        int32
-	Y        int32
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	Button    uint8
+	State     uint8
+	Padding1  uint8
+	Padding2  uint8
+	X         int32
+	Y         int32
 }
 
 type MouseWheelEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	X        int32
-	Y        int32
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	X         int32
+	Y         int32
 }
 
 type QuitEvent struct {
@@ -132,11 +137,12 @@ type QuitEvent struct {
 }
 
 type UserEvent struct {
-	Evtype   uint32
-	WindowID uint32
-	Code     int32
-	Data1    *[0]byte
-	Cata2    *[0]byte
+	Evtype    uint32
+	Timestamp uint32
+	WindowID  uint32
+	Code      int32
+	Data1     *[0]byte
+	Cata2     *[0]byte
 }
 
 type SysWMEvent struct {
