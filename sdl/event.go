@@ -102,6 +102,7 @@ type MouseMotionEvent struct {
 	Evtype    uint32
 	Timestamp uint32
 	WindowID  uint32
+	Which     uint32
 	State     uint8
 	Padding1  uint8
 	Padding2  uint8
@@ -116,6 +117,7 @@ type MouseButtonEvent struct {
 	Evtype    uint32
 	Timestamp uint32
 	WindowID  uint32
+	Which     uint32
 	Button    uint8
 	State     uint8
 	Padding1  uint8
@@ -128,6 +130,7 @@ type MouseWheelEvent struct {
 	Evtype    uint32
 	Timestamp uint32
 	WindowID  uint32
+	Which     uint32
 	X         int32
 	Y         int32
 }
