@@ -43,6 +43,20 @@ func DrawRect(_rect *Rect, _red, _green, _blue, _alpha uint8) {
 	sdl.SetRenderDrawColor(g_game.renderer, 0, 0, 0, 255)
 }
 
+func DrawCircle(_x, _y, _radius int, _red, _green, _blue, _alpha uint8) {
+	sdl.SetRenderDrawColor(g_game.renderer, _red, _green, _blue, _alpha)
+	sdl.SetRenderDrawBlendMode(g_game.renderer, sdl.BLENDMODE_BLEND)
+	for y := _y - _radius; y <= _y + _radius; y++ {
+		for x := _x - _radius; x <= _x + _radius; x++ {
+			if int(math.Hypot(float64(x - _x), float64(y - _y))) == _radius {
+				sdl.RenderDrawPoint(g_game.renderer, x, y)
+			}
+		}
+	}
+	sdl.SetRenderDrawBlendMode(g_game.renderer, sdl.BLENDMODE_NONE)
+	sdl.SetRenderDrawColor(g_game.renderer, 0, 0, 0, 255)
+}
+
 func DrawLine(_red, _green, _blue, _alpha uint8, _x1, _y1, _x2, _y2 int) {
 	sdl.SetRenderDrawColor(g_game.renderer, _red, _green, _blue, _alpha)
 	sdl.SetRenderDrawBlendMode(g_game.renderer, sdl.BLENDMODE_BLEND)

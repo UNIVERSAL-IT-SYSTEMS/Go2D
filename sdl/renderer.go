@@ -126,6 +126,14 @@ func RenderDrawRect(_renderer *Renderer, _rect Rect) {
 	C.SDL_RenderDrawRect(_renderer.Get(), (*C.SDL_Rect)(cast(&_rect)))
 }
 
+func RenderDrawPoint(_renderer *Renderer, _x, _y int) {
+	C.SDL_RenderDrawPoint(_renderer.Get(), C.int(_x), C.int(_y));
+}
+
+func RenderDrawPoints(_renderer *Renderer, _points []*Point) {
+	C.SDL_RenderDrawPoints(_renderer.Get(), (*C.SDL_Point)(cast(&_points)), C.int(len(_points)))
+}
+
 func RenderDrawLine(_renderer *Renderer, _x1, _y1, _x2, _y2 int) {
 	C.SDL_RenderDrawLine(_renderer.Get(), C.int(_x1), C.int(_y1), C.int(_x2), C.int(_y2))
 }
