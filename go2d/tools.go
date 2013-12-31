@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"math"
 )
 
 func Sleep(_ticks uint32) {
